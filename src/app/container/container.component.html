@@ -1,0 +1,20 @@
+<div class="flex h-screen border-2 border-black">
+    <div class="w-1/4 overflow-auto p-2 border-r-2 border-gray-300">
+        <div *ngFor="let file of directoryStructure" class="cursor-move" cdkDrag>{{ file.path }}</div>
+    </div>
+    <div class="flex-grow flex flex-row border-l-2 border-gray-300">
+
+        <!-- Pane 1 -->
+        <div cdkDropList class="flex-grow border-r p-2" [cdkDropListData]="droppedItems1"
+            (cdkDropListDropped)="drop($event, 'pane1')">
+            <div *ngFor="let item of droppedItems1" class="p-1">{{ item.path  }}</div>
+        </div>
+        <!-- Pane 2 -->
+        <div cdkDropList class="flex-grow p-2" [cdkDropListData]="droppedItems2"
+            (cdkDropListDropped)="drop($event, 'pane2')">
+            <div *ngFor="let item of droppedItems2" class="p-1">{{ item.path  }}</div>
+        </div>
+
+      
+    </div>
+</div>

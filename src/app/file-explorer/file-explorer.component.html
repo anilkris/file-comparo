@@ -1,0 +1,16 @@
+<ul *ngIf="fileStructure">
+    <ng-container *ngFor="let key of objectKeys(fileStructure)">
+      <li *ngIf="isObject(fileStructure[key])">
+        <span (click)="fileStructure[key].visible = !fileStructure[key].visible">+ {{ key }}</span>
+        <ul *ngIf="fileStructure[key].visible">
+          <app-file-explorer [fileStructure]="fileStructure[key]"></app-file-explorer>
+        </ul>
+      </li>
+      <li *ngIf="!isObject(fileStructure[key])">
+        <span>{{ key }}</span>
+        <ul *ngFor="let file of fileStructure[key]">
+          <li>{{ file }}</li>
+        </ul>
+      </li>
+    </ng-container>
+  </ul>

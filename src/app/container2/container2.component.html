@@ -1,0 +1,39 @@
+<div class="flex h-screen border-2 border-black">
+    <div class="w-1/4 overflow-auto p-2 border-r-2 border-gray-300">
+        <div cdkDropList #fileList="cdkDropList" [cdkDropListData]="directoryStructure" [cdkDropListConnectedTo]="[panel1List, panel2List]"
+            class="example-list">
+            @for (item of directoryStructure; track item) {
+            <div class="example-box" cdkDrag>{{item.path}}</div>
+            }
+        </div>
+
+        <app-file-explorer></app-file-explorer>
+  
+   
+    </div>
+    <div class="flex-grow flex flex-row border-l-2 border-gray-300">
+
+        <!-- Pane 1 -->
+        <div cdkDropList class="flex-grow border-r p-2">
+
+            <div cdkDropList #panel1List="cdkDropList" [cdkDropListData]="pane1List" [cdkDropListConnectedTo]="[fileList]"
+                class="example-list" (cdkDropListDropped)="drop($event, 'pane1')">
+                @for (item of pane1List; track item) {
+                <div class="example-box" cdkDrag>{{item}}</div>
+                }
+            </div>
+
+        </div>
+        <!-- Pane 2 -->
+        <div cdkDropList class="flex-grow p-2">
+
+              <div cdkDropList #panel2List="cdkDropList" [cdkDropListData]="pane2List" [cdkDropListConnectedTo]="[fileList]"
+                class="example-list" (cdkDropListDropped)="drop($event, 'pane2')">
+                @for (item of pane2List; track item) {
+                <div class="example-box" cdkDrag>{{item}}</div>
+                }
+        </div>
+
+
+    </div>
+</div>
