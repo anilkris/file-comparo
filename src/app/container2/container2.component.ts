@@ -41,11 +41,11 @@ export class Container2Component implements OnInit{
 
   ngOnInit() {
     if (!this.fileStructure) {
-      this.fileStructureService.getStructure().subscribe(data => {
+      this.fileStructureService.getStructureFromServer().subscribe(data => {
         this.fileStructure = data;
+        this.directoryStructure = this.findLeafNodes(this.fileStructure);
       });
     }
-    this.directoryStructure = this.processData(this.fileStructure);
   }
 
   processData(data: any, path: string[] = []): any[] {
@@ -84,5 +84,29 @@ export class Container2Component implements OnInit{
       console.log('Dropped pane: ', targetPane);
     
     }
+
+
+    findLeafNodes(obj: any, leaves: string[] = []) {
+      Object.keys(obj).forEach(key => {
+        const value = obj[key];
+        if (Array.isArray(value)) {
+          // Assuming all array items are leaf nodes
+          value.forEach(item => leaves.push(item));
+        } else if (typeof value === 'object') {
+         this.findLeafNodes(value, leaves);
+        } else {
+          // If the value is neither an array nor an object, it's a leaf node
+          leaves.push(value);
+        }
+      });
+      return leaves;
+    }
+
+
+    handleItemDragged(item: string): void {
+      console.log('Item dragged:', item);
+      // You can handle the dragged item here, e.g., store it in a variable
+    }
+
 
   }

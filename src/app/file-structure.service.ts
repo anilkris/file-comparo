@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -20,9 +21,23 @@ export class FileStructureService {
     "files": ["/your/project/path/package.json"]
   };
 
+  private http=inject(HttpClient);
   constructor() {}
 
   getStructure(): Observable<any> {
     return of(this.fileStructure);
   }
+
+  getStructureFromServer(): Observable<any> {
+    return this.http.get('http://localhost:3000/api/files');
+
+  }
+
+   fetchFileContents(filePath: string): Observable<any> {
+    // Construct the URL for the request based on the file path
+    const url = `http://localhost:3000/api/files?path=${encodeURIComponent(filePath)}`;
+
+    return this.http.get(url, { responseType: 'text' });
+  }
+
 }

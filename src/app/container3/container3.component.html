@@ -1,0 +1,23 @@
+
+<div class="flex h-screen border-2 border-black">
+  <div class="w-1/4 overflow-auto p-2 border-r-2 border-gray-300">
+    <div cdkDropList #fileList="cdkDropList" [cdkDropListData]="directoryStructure"
+       class="example-list">
+
+    
+
+
+    </div>
+
+    <app-file-explorer [node]="directoryStructure" (itemDragged)="handleItemDragged($event)"></app-file-explorer>
+
+
+  </div>
+<div class="drop-pane" cdkDropList (cdkDropListDropped)="drop($event, 'pane1')">
+    Pane 1
+   <div *ngIf="fileContents">{{fileContents}}</div>
+
+</div>
+<div class="drop-pane" cdkDropList (cdkDropListDropped)="drop($event, 'pane2')">
+    Pane 2
+</div>

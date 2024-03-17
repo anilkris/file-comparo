@@ -1,16 +1,21 @@
-<ul *ngIf="fileStructure">
-    <ng-container *ngFor="let key of objectKeys(fileStructure)">
-      <li *ngIf="isObject(fileStructure[key])">
-        <span (click)="fileStructure[key].visible = !fileStructure[key].visible">+ {{ key }}</span>
-        <ul *ngIf="fileStructure[key].visible">
-          <app-file-explorer [fileStructure]="fileStructure[key]"></app-file-explorer>
-        </ul>
-      </li>
-      <li *ngIf="!isObject(fileStructure[key])">
-        <span>{{ key }}</span>
-        <ul *ngFor="let file of fileStructure[key]">
-          <li>{{ file }}</li>
-        </ul>
-      </li>
-    </ng-container>
+<div>
+Explorer
+</div>
+<div *ngIf="isObject(node)">
+  <ul>
+    <li *ngFor="let key of objectKeys(node)">
+      {{key}}:
+      <app-file-explorer="node[key]"></app-file-explorer>
+    </li>
   </ul>
+</div>
+
+<div *ngIf="isArray(node)">
+  <ul>
+    <li *ngFor="let item of node" cdkDrag (cdkDragStarted)="startDrag(item)">{{item}}</li>
+  </ul>
+</div>
+
+<div *ngIf="isLeafNode(node)" cdkDrag (cdkDragStarted)="startDrag(node)">
+  {{node}}
+</div>
